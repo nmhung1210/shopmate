@@ -1,0 +1,2 @@
+export const GET_DEPARTMENTS = 'GET_DEPARTMENTS';
+export const GET_CATEGORIES = 'GET_CATEGORIES';

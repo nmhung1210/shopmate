@@ -1,0 +1,23 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "quotemark": [true, "single", "avoid-escape", "avoid-template"],
+    "space-before-function-paren": [true, "always"],
+    "object-literal-sort-keys": false,
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+    "indent": [true, "spaces", 2],
+    "no-console": false,
+    "prefer-for-of": false,
+    "ban-types": [],
+    "forin": false
+  },
+  "jsRules": {
+    "quotemark": [true, "single", "avoid-escape", "avoid-template"],
+    "space-before-function-paren": [true, "always"],
+    "object-literal-sort-keys": false,
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+    "indent": [true, "spaces", 2]
+  }
+}
