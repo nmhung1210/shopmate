@@ -1,16 +1,4 @@
-import { IAction } from '../actions';
-
-interface IProduct {
-  product_id: number;
-  name: string;
-  description: string;
-  price: string;
-  discounted_price: string;
-  image: string;
-  image2: string;
-  thumbnail: string;
-  display: number;
-}
+import { IAction, IProduct } from '../schemas';
 
 export default function Products (state = [] as IProduct[], action: IAction): IProduct[] {
   return state;

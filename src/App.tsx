@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+
+import {api} from './apis';
 class App extends Component {
-  render() {
+  public render () {
+    console.log(api);
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className='App'>
+        <header className='App-header'>
         </header>
       </div>
     );
