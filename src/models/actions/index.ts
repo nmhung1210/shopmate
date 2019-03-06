@@ -1,4 +1,5 @@
-export interface IAction {
-  type: string;
-  params?: any
-}
+import * as ActionTypes from './ActionTypes';
+
+export {
+  ActionTypes
+};
