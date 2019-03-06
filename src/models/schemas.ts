@@ -5,8 +5,9 @@ export interface IAction {
 
 export interface ICartItem {
   item_id: number;
+  product_id: number;
   name: string;
-  attributes: string;
+  attributes: IAttributeProductValue[];
   price: string;
   quantity: number;
   subtotal: string;
