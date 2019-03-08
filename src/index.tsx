@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import { DataProvider } from './models';
 import * as serviceWorker from './serviceWorker';
@@ -7,7 +8,11 @@ import './styles/index.css';
 
 ReactDOM.render(
   <DataProvider>
-    <App />
+    <Router>
+      <div className='container'>
+        <App />
+      </div>
+    </Router>
   </DataProvider>,
   document.getElementById('root')
 );

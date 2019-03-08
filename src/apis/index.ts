@@ -1,5 +1,4 @@
-import api from './webApi';
-
+import * as products from './products';
 export {
-  api
+  products
 };

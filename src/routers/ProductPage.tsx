@@ -2,26 +2,29 @@ import { Card } from '@material-ui/core';
 import * as React from 'react';
 import { CardDeck, CardGroup, Container, Jumbotron, Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
+import { RouteComponentProps, RouteProps } from 'react-router';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import ProductCard from '../components/ProductCard';
 import PromotionCard from '../components/ProductPromotionCard';
 import { getProducts } from '../models/actions';
 import { IRootState } from '../models/reducers';
 import { IProductState } from '../models/reducers/Products';
 
-export interface IHomePageProps {
+interface IProductPageProps extends RouteComponentProps, DispatchProp {
   products: IProductState;
 }
-class HomePage extends React.Component<IHomePageProps> {
-  constructor (props: IHomePageProps) {
+
+class ProductPage extends React.Component<IProductPageProps> {
+  constructor (props: IProductPageProps) {
     super(props);
   }
   public componentWillMount () {
-    const { dispatch } = this.props as any;
+    const { dispatch } = this.props;
     dispatch(getProducts());
   }
   public render () {
-    const props = this.props as IHomePageProps;
+    const props = this.props as IProductPageProps;
     const products = props.products;
     return (
       <div>
@@ -47,4 +50,4 @@ const mapStateToProps = (state: IRootState) => {
   };
 };
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(ProductPage);

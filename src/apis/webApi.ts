@@ -1,6 +1,7 @@
 import Axios, { AxiosInstance, AxiosResponse } from 'axios';
 import qs from 'qs';
 import storeCache from 'store';
+import { API_CACHE_TIMEOUT, API_ENDPOINT, API_REQUEST_TIMEOUT } from '../configs';
 
 export class WebApi {
   private token: string;
@@ -9,8 +10,8 @@ export class WebApi {
   constructor () {
     this.token = '';
     this.axios = Axios.create({
-      baseURL: 'https://backendapi.turing.com',
-      timeout: 10000
+      baseURL: API_ENDPOINT,
+      timeout: API_REQUEST_TIMEOUT
     });
   }
 
@@ -23,26 +24,34 @@ export class WebApi {
     return !!this.token;
   }
 
-  public get (path: string, payload = null as any, usecache = true, cacheTimeout = 3600000): Promise<any> {
-    const url  = `${path}?${qs.stringify(payload)}`;
+  public get (
+    path: string,
+    payload = null as any,
+    usecache = true,
+    cacheTimeout = API_CACHE_TIMEOUT
+  ): Promise<any> {
+    const url = `${path}?${qs.stringify(payload)}`;
     if (usecache) {
       const cache = storeCache.get(url);
-      if (cache && (cache.expire > Date.now())) {
+      if (cache && cache.expire > Date.now()) {
         return Promise.resolve(cache.data);
       }
     }
-    return this.axios.get(url).then((res) => res.data).then((data) => {
-      if (usecache) {
-        storeCache.set(url, {
-          data,
-          expire: Date.now() + cacheTimeout
-        });
-      }
-      return data;
-    });
+    return this.axios
+      .get(url)
+      .then((res) => res.data)
+      .then((data) => {
+        if (usecache) {
+          storeCache.set(url, {
+            data,
+            expire: Date.now() + cacheTimeout
+          });
+        }
+        return data;
+      });
   }
 
-  public inValidateCache (path= ''): void {
+  public inValidateCache (path = ''): void {
     if (!path) {
       storeCache.clearAll();
     }
@@ -56,31 +65,36 @@ export class WebApi {
   public post (path: string, payload: any): Promise<any> {
     // Clear cache under this path to ensure recieve latest data from the get api.
     this.inValidateCache(path);
-    return this.axios.post(path, payload).then((res: AxiosResponse): any => (res.data || res));
+    return this.axios.post(path, payload).then((res: AxiosResponse): any => res.data || res);
   }
 
   public put (path: string, payload: any): Promise<any> {
     this.inValidateCache(path);
-    return this.axios.put(path, payload).then((res: AxiosResponse): any => (res.data || res));
+    return this.axios.put(path, payload).then((res: AxiosResponse): any => res.data || res);
   }
 
   // authGet method  would check if user already logged in before exec the api call.
-  public authGet (path: string, payload = null as any, usecache = true, cacheTimeout = 3600000): Promise<any> {
-    if (!this.isAuthorized())  {
+  public authGet (
+    path: string,
+    payload = null as any,
+    usecache = true,
+    cacheTimeout = API_CACHE_TIMEOUT
+  ): Promise<any> {
+    if (!this.isAuthorized()) {
       return Promise.reject('UnAuthrorized!');
     }
     return this.get(path, payload, usecache, cacheTimeout);
   }
 
   public authPost (path: string, payload: any): Promise<any> {
-    if (!this.isAuthorized())  {
+    if (!this.isAuthorized()) {
       return Promise.reject('UnAuthrorized!');
     }
     return this.post(path, payload);
   }
 
   public authPut (path: string, payload: any): Promise<any> {
-    if (!this.isAuthorized())  {
+    if (!this.isAuthorized()) {
       return Promise.reject('UnAuthrorized!');
     }
     return this.put(path, payload);
