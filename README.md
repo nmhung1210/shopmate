@@ -46,4 +46,4 @@ Check document at https://github.com/zandoan/turing-frontend
 ## Frameworks
 Frontend stack: ReactJS, Redux 
 
-UI Framework: Material UI (https://material-ui.com/)
+UI Framework: Bootstrap 4

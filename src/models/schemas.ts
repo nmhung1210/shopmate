@@ -20,6 +20,17 @@ export interface ICategory {
   department_id: number;
 }
 
+export interface ICategoriesList {
+  count: number;
+  rows: ICategory[];
+}
+
+export interface IProductCategoryInfo {
+  category_id: number;
+  department_id: number;
+  name: string;
+}
+
 export interface ICustomer {
   customer_id: number;
   name: string;
@@ -79,12 +90,12 @@ export interface IProductDetail {
   price: string;
   discounted_price: string;
   image: string;
-  image2: string;
+  image_2: string;
 }
 
 export interface IProductComplete extends IProduct {
   image: string;
-  image2: string;
+  image_2: string;
   display: number;
 }
 

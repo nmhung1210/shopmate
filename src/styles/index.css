@@ -4,7 +4,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Montserrat', 'Open Sans', 'Playfair Display', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f7f7f7;
@@ -126,4 +127,10 @@ button:focus {
 .productCover:hover {
   opacity: 1;
   background-color: rgba(255, 255, 255, 0.9);
+}
+
+.breadcrumb {
+  background-color: transparent;
+  padding-left: 0;
+  margin-bottom: 0.5rem;
 }

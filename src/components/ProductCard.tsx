@@ -12,7 +12,7 @@ export default function ProductCard (props: IProductCardProps) {
   const { name, description, thumbnail, price } = props.product;
   return (
     <Card className='text-center'>
-      <Card.Img src={`${CDN_ROOT}${thumbnail}`} />
+      <Card.Img src={`${CDN_ROOT}${thumbnail}`} className='p-4' />
       <Card.Body className='d-flex flex-column'>
         <Card.Title as='h5'>{name}</Card.Title>
         <Card.Title as='h6' className='mt-auto text-danger'>

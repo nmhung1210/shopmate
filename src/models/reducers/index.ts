@@ -1,5 +1,5 @@
 import Cart from './Cart';
-import Categories from './Categories';
+import Categories, { ICategoriesState } from './Categories';
 import Customer from './Customer';
 import Departments from './Departments';
 import Products, { IProductState } from './Products';
@@ -9,7 +9,7 @@ import { combineReducers } from 'redux';
 
 export interface IRootState {
   Cart: any;
-  Categories: any;
+  Categories: ICategoriesState;
   Customer: any;
   Departments: any;
   Products: IProductState;

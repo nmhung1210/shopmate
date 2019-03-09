@@ -1,12 +1,22 @@
 import { ActionTypes } from '..';
-import { IAction, IProduct, IProductComplete, IProductList } from '../schemas';
+import {
+  IAction,
+  IAttributeProductValue,
+  IProduct,
+  IProductComplete,
+  IProductDetail,
+  IProductList,
+  IReview
+} from '../schemas';
 
 export interface IProductDetailDict {
   [index: number]: IProductComplete;
 }
 export interface IProductState {
   products: IProductList;
-  productDetails: IProductDetailDict;
+  productDetail: IProductComplete | null;
+  productAtrributes: IAttributeProductValue[];
+  productReviews: IReview[];
   page: number;
   limit: number;
   promotion: IProduct | null;
@@ -19,7 +29,9 @@ export default function Products (
       count: 0,
       rows: []
     },
-    productDetails: {},
+    productDetail: null,
+    productAtrributes: [],
+    productReviews: [],
     page: 1,
     limit: 20,
     promotion: null,
@@ -56,10 +68,24 @@ export default function Products (
       if (params.success) {
         return {
           ...state,
-          productDetails: {
-            ...state.productDetails,
-            [params.productId]: params.data
-          }
+          productDetail: params.data
+        };
+      }
+      break;
+    case ActionTypes.GET_PRODUCT_ATTRIBUTES:
+      if (params.success) {
+        return {
+          ...state,
+          productAtrributes: params.data
+        };
+      }
+      break;
+
+    case ActionTypes.GET_PRODUCT_REVIEWS:
+      if (params.success) {
+        return {
+          ...state,
+          productReviews: params.data
         };
       }
       break;

@@ -3,9 +3,10 @@ import * as React from 'react';
 import { CardDeck, CardGroup, Container, Jumbotron, Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import JumboTron from '../components/JumboTron';
 import ProductCard from '../components/ProductCard';
 import PromotionCard from '../components/ProductPromotionCard';
-import { getProducts } from '../models/actions';
+import { actionGetProducts } from '../models/actions';
 import { IRootState } from '../models/reducers';
 import { IProductState } from '../models/reducers/Products';
 
@@ -18,13 +19,14 @@ class HomePage extends React.Component<IHomePageProps> {
   }
   public componentWillMount () {
     const { dispatch } = this.props as any;
-    dispatch(getProducts());
+    dispatch(actionGetProducts());
   }
   public render () {
     const props = this.props as IHomePageProps;
     const products = props.products;
     return (
-      <div>
+      <Container>
+        <JumboTron />
         {products.promotion ? <PromotionCard product={products.promotion} /> : null}
         <Card style={{marginTop: '1rem', padding: '1rem'}}>
           <Container>
@@ -36,7 +38,7 @@ class HomePage extends React.Component<IHomePageProps> {
             </CardDeck>
           </Container>
         </Card>
-      </div>
+      </Container>
     );
   }
 }
