@@ -33,6 +33,10 @@ h2, h3, h4, h5, h6 {
   color: #f62f5e !important;
 }
 
+.brandName:hover {
+  text-decoration: none;
+}
+
 .mainNavItem {
   padding: 0px 20px !important;
   line-height: 48px;
@@ -74,18 +78,6 @@ h2, h3, h4, h5, h6 {
 
 .btn {
   font-family: Montserrat;
-}
-
-.jumboTron .btn-outline-danger {
-  height: 4rem;
-  background-color: #fff;
-  border: none;
-  border-radius: 2rem;
-  padding: 0.75rem 2.5rem;
-}
-
-.jumboTron .btn-outline-danger:hover {
-  background-color: #dc3545;
 }
 
 .footerNav {
@@ -133,4 +125,8 @@ button:focus {
   background-color: transparent;
   padding-left: 0;
   margin-bottom: 0.5rem;
+}
+
+.page-link{
+  box-shadow: none !important;
 }

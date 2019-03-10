@@ -24,29 +24,29 @@ export default class ColorPicker extends React.Component<IColorPickerProps, ICol
     const props = this.props;
     const { activeColor } = this.state;
     return (
-      <ButtonToolbar aria-label='Color picker'>
-        <ButtonGroup className='mr-2'>
-          {props.colors.map((color) => (
-            <Button
-              className='rounded-circle mr-3'
-              style={{
-                width: '1rem',
-                height: '1rem',
-                backgroundColor: color,
-                padding: 0,
-                border: 'solid 3px #fff',
-                boxShadow: `0px 0px 2px 2px ${color === activeColor ? '#f62f5e' : 'rgba(0,0,0,0.2)'}`
-              }}
-              onClick={() => {
-                if (color !== activeColor) {
-                  this.setState({ activeColor: color });
-                  props.onColorChange && props.onColorChange(color);
-                }
-              }}
-            />
-          ))}
-        </ButtonGroup>
-      </ButtonToolbar>
+      <div className='mr-2 mb-2'>
+        {props.colors.map((color) => (
+          <Button
+            className='rounded-circle mr-3 mb-2'
+            style={{
+              width: '1rem',
+              height: '1rem',
+              backgroundColor: color,
+              padding: 0,
+              border: 'solid 3px #fff',
+              boxShadow: `0px 0px 2px 2px ${
+                color === activeColor ? '#f62f5e' : 'rgba(0,0,0,0.2)'
+              }`
+            }}
+            onClick={() => {
+              if (color !== activeColor) {
+                this.setState({ activeColor: color });
+                props.onColorChange && props.onColorChange(color);
+              }
+            }}
+          />
+        ))}
+      </div>
     );
   }
 }

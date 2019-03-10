@@ -24,24 +24,22 @@ export default class SizePicker extends React.Component<ISizePickerProps, ISizeP
     const props = this.props;
     const { activeSize } = this.state;
     return (
-      <ButtonToolbar aria-label='Size picker'>
-        <ButtonGroup className='mr-2'>
-          {props.sizes.map((size) => (
-            <Button
-              style={{boxShadow: 'none'}}
-              variant={size === activeSize ? 'danger' : 'light'}
-              className='sm border-light rounded mr-2'
-              onClick={() => {
-                if (size !== activeSize) {
-                  this.setState({ activeSize: size });
-                  props.onSizeChange && props.onSizeChange(size);
-                }
-              }}>
-              {size}
-            </Button>
-          ))}
-        </ButtonGroup>
-      </ButtonToolbar>
+      <div className='mr-2 mb-2'>
+        {props.sizes.map((size) => (
+          <Button
+            style={{ boxShadow: 'none' }}
+            variant={size === activeSize ? 'danger' : 'light'}
+            className='sm border-light rounded mb-2 mr-2'
+            onClick={() => {
+              if (size !== activeSize) {
+                this.setState({ activeSize: size });
+                props.onSizeChange && props.onSizeChange(size);
+              }
+            }}>
+            {size}
+          </Button>
+        ))}
+      </div>
     );
   }
 }

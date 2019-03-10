@@ -4,7 +4,7 @@ import { attributeApis, categoryApis, productApis } from '../../apis';
 import { IAction, IReview } from '../schemas';
 import * as ActionTypes from './ActionTypes';
 
-export const actionGetProducts = (page = 1, limit = 20): any => (
+export const actionGetProducts = (page = 1, limit = 6): any => (
   dispatch: (action: IAction) => void
 ) => {
   dispatch({

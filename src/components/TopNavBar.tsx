@@ -3,15 +3,25 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React from 'react';
-import { Button, Container, Form, FormControl, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
+import {
+  Button,
+  Container,
+  Form,
+  FormControl,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Row
+} from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export function TopNavBar (props: any) {
   return (
     <Navbar collapseOnSelect expand='lg' bg='light' variant='light' sticky='top'>
-      <Navbar.Brand href='#home' className='brandName'>
+      <Link to='/' className='brandName'>
         SHOPMATE
-      </Navbar.Brand>
+      </Link>
 
       <Navbar.Collapse>
         <Container>
@@ -19,21 +29,21 @@ export function TopNavBar (props: any) {
             <Col md='1' />
             <Col md='8'>
               <Nav className='mr-auto'>
-                <Nav.Link href='#features' className='mainNavItem'>
+                <Link to='/search?query_string=women' className='mainNavItem'>
                   Women
-                </Nav.Link>
-                <Nav.Link href='#features' className='mainNavItem'>
+                </Link>
+                <Link to='/search?query_string=men' className='mainNavItem'>
                   Men
-                </Nav.Link>
-                <Nav.Link href='#features' className='mainNavItem'>
+                </Link>
+                <Link to='/search?query_string=kids' className='mainNavItem'>
                   Kids
-                </Nav.Link>
-                <Nav.Link href='#features' className='mainNavItem'>
+                </Link>
+                <Link to='/search?query_string=shose' className='mainNavItem'>
                   Shose
-                </Nav.Link>
-                <Nav.Link href='#features' className='mainNavItem'>
+                </Link>
+                <Link to='/search?query_string=brands' className='mainNavItem'>
                   Brands
-                </Nav.Link>
+                </Link>
               </Nav>
             </Col>
             <Col md='3'>

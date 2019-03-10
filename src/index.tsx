@@ -8,7 +8,7 @@ import './styles/index.css';
 
 ReactDOM.render(
   <DataProvider>
-    <Router>
+    <Router  >
       <div className='container'>
         <App />
       </div>
