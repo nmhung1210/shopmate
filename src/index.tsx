@@ -1,4 +1,6 @@
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
@@ -8,10 +10,21 @@ import './styles/index.css';
 
 ReactDOM.render(
   <DataProvider>
-    <Router  >
-      <div className='container'>
+    <Router>
+      <SnackbarProvider
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center'
+        }}
+        action={[
+          <Button variant='link' className='text-light' size='sm'>
+            {'Dismiss'}
+          </Button>
+        ]}
+        autoHideDuration={2000}
+        maxSnack={1}>
         <App />
-      </div>
+      </SnackbarProvider>
     </Router>
   </DataProvider>,
   document.getElementById('root')

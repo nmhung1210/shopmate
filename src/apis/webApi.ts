@@ -4,8 +4,10 @@ import storeCache from 'store';
 import { API_CACHE_TIMEOUT, API_ENDPOINT, API_REQUEST_TIMEOUT } from '../configs';
 
 export class WebApi {
+  public loginChain: Promise<any>;
   private token: string;
   private axios: AxiosInstance;
+  private loginResolve: () => void;
 
   constructor () {
     this.token = '';
@@ -13,11 +15,24 @@ export class WebApi {
       baseURL: API_ENDPOINT,
       timeout: API_REQUEST_TIMEOUT
     });
+    this.loginResolve = () => '';
+    this.loginChain = new Promise((resolve) => {
+      this.loginResolve = resolve;
+    });
   }
 
   public auth (token: string) {
     this.token = token;
     this.axios.defaults.headers.common['user-key'] = token;
+    if (token) {
+      this.loginResolve();
+      this.loginResolve = () => '';
+      this.loginChain = Promise.resolve(token);
+    } else {
+      this.loginChain = new Promise((resolve) => {
+        this.loginResolve = resolve;
+      });
+    }
   }
 
   public isAuthorized () {
@@ -80,24 +95,15 @@ export class WebApi {
     usecache = true,
     cacheTimeout = API_CACHE_TIMEOUT
   ): Promise<any> {
-    if (!this.isAuthorized()) {
-      return Promise.reject('UnAuthrorized!');
-    }
-    return this.get(path, payload, usecache, cacheTimeout);
+    return this.loginChain.then(() => this.get(path, payload, usecache, cacheTimeout));
   }
 
   public authPost (path: string, payload: any): Promise<any> {
-    if (!this.isAuthorized()) {
-      return Promise.reject('UnAuthrorized!');
-    }
-    return this.post(path, payload);
+    return this.loginChain.then(() => this.post(path, payload));
   }
 
   public authPut (path: string, payload: any): Promise<any> {
-    if (!this.isAuthorized()) {
-      return Promise.reject('UnAuthrorized!');
-    }
-    return this.put(path, payload);
+    return this.loginChain.then(() => this.put(path, payload));
   }
 }
 

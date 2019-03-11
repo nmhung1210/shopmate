@@ -9,10 +9,10 @@ export interface IProductPromotionCardProps {
   product: IProduct;
 }
 
-export default function ProductPromotionCard (props: IProductPromotionCardProps) {
+export default function CompProductPromotionCard (props: IProductPromotionCardProps) {
   const { name, description, thumbnail } = props.product;
   return (
-    <Card className='p-4 my-2'>
+    <Card className='border-0 p-4'>
       <Row>
         <Col md={4}>
           <Card.Img src={`${CDN_ROOT}${thumbnail}`} />

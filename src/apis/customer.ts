@@ -2,7 +2,7 @@ import { ICustomer, ICustomerAddress, ICustomerRegister } from '../models/schema
 import { isValidEmail } from '../utils';
 import api from './webApi';
 
-export function updateCustomer (customer: ICustomer): Promise<any> {
+export function apiUpdateCustomer (customer: ICustomer): Promise<any> {
   if (!api.isAuthorized()) {
     return Promise.reject('User unauthorized!');
   }
@@ -10,11 +10,11 @@ export function updateCustomer (customer: ICustomer): Promise<any> {
   return api.put('/customer', profiles);
 }
 
-export function getCustomer (): Promise<ICustomer> {
+export function apiGetCustomer (): Promise<ICustomer> {
   return api.get('/customer');
 }
 
-export function registerCustomer (name: string, email: string, password: string): Promise<any> {
+export function apiRegisterCustomer (name: string, email: string, password: string): Promise<any> {
   // Validate data first
   if (!name || !password || !isValidEmail(email)) {
     return Promise.reject('Invalid parameters!');
@@ -22,7 +22,7 @@ export function registerCustomer (name: string, email: string, password: string)
   return api.post('/customers', { name, email, password });
 }
 
-export function customerLogin (email: string, password: string): Promise<ICustomerRegister> {
+export function apiCustomerLogin (email: string, password: string): Promise<ICustomerRegister> {
   // Validate data first
   if (!password || !isValidEmail(email)) {
     return Promise.reject('Invalid parameters!');
@@ -31,7 +31,7 @@ export function customerLogin (email: string, password: string): Promise<ICustom
 }
 
 // Sign in with a facebook login token.
-export function customerFacebookLogin (accessToken: string): Promise<ICustomerRegister> {
+export function apiCustomerFacebookLogin (accessToken: string): Promise<ICustomerRegister> {
   // Validate data first
   if (!accessToken) {
     return Promise.reject('Invalid parameters!');
@@ -40,7 +40,7 @@ export function customerFacebookLogin (accessToken: string): Promise<ICustomerRe
 }
 
 // Update the address from customer
-export function updateCustomerAddress (address: ICustomerAddress): Promise<any> {
+export function apiUpdateCustomerAddress (address: ICustomerAddress): Promise<any> {
   if (!api.isAuthorized()) {
     return Promise.reject('User unauthorized!');
   }
@@ -48,7 +48,7 @@ export function updateCustomerAddress (address: ICustomerAddress): Promise<any> 
 }
 
 // Update the credit card from customer
-export function updateCustomerCreditCard (creditCard: string): Promise<any> {
+export function apiUpdateCustomerCreditCard (creditCard: string): Promise<any> {
   if (!api.isAuthorized()) {
     return Promise.reject('User unauthorized!');
   }

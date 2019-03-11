@@ -3,7 +3,7 @@ import { Card, Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import { Container } from 'react-bootstrap';
 
-export default function FooterNav (props: any) {
+export default function CompFooterNav (props: any) {
   return (
     <Container className='footerNav'>
       <Row>

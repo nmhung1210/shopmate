@@ -9,7 +9,7 @@ interface IPaginationBarProps {
   onPage?: (p: number) => void;
 }
 
-export default function PaginationBar (props: IPaginationBarProps) {
+export default function CompPaginationBar (props: IPaginationBarProps) {
   const pageCount = Math.ceil(props.count / props.limit);
   const showCount = Math.min(props.showCount, pageCount);
   const page = props.page;

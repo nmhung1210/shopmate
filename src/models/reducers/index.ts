@@ -1,28 +1,26 @@
 import Cart from './Cart';
 import Categories, { ICategoriesState } from './Categories';
 import Customer from './Customer';
-import Departments from './Departments';
 import Products, { IProductState } from './Products';
-import Reviews from './Review';
 
 import { combineReducers } from 'redux';
+import { ICustomer } from '../schemas';
+import Dialogs, { IDialogState } from './Dialogs';
 
 export interface IRootState {
   Cart: any;
   Categories: ICategoriesState;
-  Customer: any;
-  Departments: any;
+  Customer: ICustomer;
   Products: IProductState;
-  Reviews: any;
+  Dialogs: IDialogState;
 }
 
 const rootReducer = combineReducers({
   Cart,
   Categories,
   Customer,
-  Departments,
   Products,
-  Reviews
+  Dialogs
 });
 
 export default rootReducer;

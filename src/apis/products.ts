@@ -58,5 +58,5 @@ export function apiGetProductReviewsById (id: number): Promise<IReview[]> {
 
 // Post a review for a product.
 export function apiPostProductReviewsById (productId: number, review: string, rating: number): Promise<any> {
-  return api.post(`/products/${productId}/reviews`, { review, rating });
+  return api.authPost(`/products/${productId}/reviews`, { review, rating });
 }

@@ -11,7 +11,7 @@ interface IProductReviewFormProps {
   defaultRating: number;
 }
 
-export default function ProductReviewForm (props: IProductReviewFormProps) {
+export default function CompProductReviewForm (props: IProductReviewFormProps) {
   let rating = props.defaultRating;
   return (
     <Container>
@@ -29,6 +29,7 @@ export default function ProductReviewForm (props: IProductReviewFormProps) {
             created_on: new Date().toISOString()
           };
           props.onSubmit(review);
+          e.currentTarget.reset();
           return false;
         }}>
         <Form.Group as={Row} controlId='formHorizontalNickname' className='mt-4'>

@@ -12,7 +12,10 @@ export interface ISizePickerState {
   activeSize: string;
 }
 
-export default class SizePicker extends React.Component<ISizePickerProps, ISizePickerState> {
+export default class CompSizePicker extends React.Component<
+  ISizePickerProps,
+  ISizePickerState
+> {
   constructor (props: ISizePickerProps) {
     super(props);
     this.state = {
@@ -20,9 +23,22 @@ export default class SizePicker extends React.Component<ISizePickerProps, ISizeP
     };
   }
 
+  public sizeChangeHandler = (size: string) => () => {
+    const { activeSize } = this.state;
+    const { onSizeChange } = this.props;
+    if (size !== activeSize) {
+      this.setState({ activeSize: size });
+      onSizeChange && onSizeChange(size);
+    }
+  }
+
   public render () {
     const props = this.props;
     const { activeSize } = this.state;
+    if (!activeSize && props.sizes.length) {
+      this.sizeChangeHandler(props.sizes[0])();
+    }
+
     return (
       <div className='mr-2 mb-2'>
         {props.sizes.map((size) => (
@@ -30,12 +46,7 @@ export default class SizePicker extends React.Component<ISizePickerProps, ISizeP
             style={{ boxShadow: 'none' }}
             variant={size === activeSize ? 'danger' : 'light'}
             className='sm border-light rounded mb-2 mr-2'
-            onClick={() => {
-              if (size !== activeSize) {
-                this.setState({ activeSize: size });
-                props.onSizeChange && props.onSizeChange(size);
-              }
-            }}>
+            onClick={this.sizeChangeHandler(size)}>
             {size}
           </Button>
         ))}

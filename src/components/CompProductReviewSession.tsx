@@ -13,15 +13,15 @@ import { actionPostProductReviews } from '../models/actions';
 import { IRootState } from '../models/reducers';
 import { IProductState } from '../models/reducers/Products';
 import { IReview } from '../models/schemas';
-import ProductReviewEntry from './ProductReviewEntry';
-import ProductReviewForm from './ProductReviewForm';
+import CompProductReviewEntry from './CompProductReviewEntry';
+import CompProductReviewForm from './CompProductReviewForm';
 
 interface IProductViewProps extends DispatchProp {
   products: IProductState;
   productId: number;
 }
 
-function ProductReviewSession (props: IProductViewProps) {
+function CompProductReviewSession (props: IProductViewProps) {
   return (
     <Container className='bg-light pt-4'>
       <Row>
@@ -35,7 +35,7 @@ function ProductReviewSession (props: IProductViewProps) {
             </Row>
           </Container>
           {props.products.productReviews.map((review: IReview) => (
-            <ProductReviewEntry review={review} />
+            <CompProductReviewEntry review={review} />
           ))}
         </Col>
       </Row>
@@ -55,7 +55,7 @@ function ProductReviewSession (props: IProductViewProps) {
               </Col>
             </Row>
           </Container>
-          <ProductReviewForm
+          <CompProductReviewForm
             defaultRating={5}
             onSubmit={(review: IReview) => {
               return props.dispatch(actionPostProductReviews(props.productId, review));
@@ -71,4 +71,4 @@ export default connect((state: IRootState) => {
   return {
     products: state.Products
   };
-})(ProductReviewSession);
+})(CompProductReviewSession);

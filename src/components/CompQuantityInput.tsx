@@ -17,7 +17,7 @@ export interface IQuantityInputState {
   clear: boolean;
 }
 
-export default class QuantityInput extends React.Component<
+export default class CompQuantityInput extends React.Component<
   IQuantityInputProps,
   IQuantityInputState
 > {

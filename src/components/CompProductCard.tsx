@@ -9,15 +9,17 @@ export interface IProductCardProps {
   product: IProduct;
 }
 
-export default function ProductCard (props: IProductCardProps) {
+export default function CompProductCard (props: IProductCardProps) {
   const { name, thumbnail, price, discounted_price } = props.product;
   const haveDiscounted = parseFloat(discounted_price) > 0;
   return (
-    <Card as={Col} md='4'>
+    <Card as={Col} md='4' className='p-0'>
       <Card.Img src={`${CDN_ROOT}${thumbnail}`} className='p-4' />
       {haveDiscounted ? (
         <Card.ImgOverlay>
-          <h4><Badge variant='danger'>HOT</Badge></h4>
+          <h4>
+            <Badge variant='danger'>HOT</Badge>
+          </h4>
         </Card.ImgOverlay>
       ) : null}
       <Card.Body className='d-flex flex-column text-center'>

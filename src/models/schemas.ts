@@ -4,13 +4,11 @@ export interface IAction {
 }
 
 export interface ICartItem {
-  item_id: number;
-  product_id: number;
-  name: string;
+  itemId: string;
+  product: IProductDetail;
   attributes: IAttributeProductValue[];
-  price: string;
   quantity: number;
-  subtotal: string;
+  subtotal: number;
 }
 
 export interface ICategory {
@@ -58,7 +56,7 @@ export interface ICustomerAddress {
 }
 
 export interface ICustomerRegister {
-  customer: ICustomer;
+  user: ICustomer;
   accessToken: string;
   expires_in: string;
 }

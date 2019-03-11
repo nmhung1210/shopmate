@@ -13,7 +13,7 @@ interface IProductReviewEntryProps {
   review: IReview;
 }
 
-export default function ProductReviewEntry (props: IProductReviewEntryProps) {
+export default function CompProductReviewEntry (props: IProductReviewEntryProps) {
   const review = props.review;
   return (
     <Container className='mt-2'>

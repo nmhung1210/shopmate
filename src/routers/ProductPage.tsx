@@ -6,8 +6,8 @@ import Rating from 'react-rating';
 import { connect, DispatchProp } from 'react-redux';
 import { RouteComponentProps, RouteProps } from 'react-router';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import ProductCard from '../components/ProductCard';
-import PromotionCard from '../components/ProductPromotionCard';
+import CompProductCard from '../components/CompProductCard';
+import PromotionCard from '../components/CompProductPromotionCard';
 import { CDN_ROOT } from '../configs';
 
 import IconStar from '@material-ui/icons/Star';
@@ -17,15 +17,17 @@ import { Checkbox, FormControlLabel } from '@material-ui/core';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import human from 'human-time';
-import { Media } from 'react-bootstrap';
+import { withSnackbar, withSnackbarProps } from 'notistack';
 import { ButtonToolbar } from 'react-bootstrap';
+import { Media } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { Interface } from 'readline';
-import ColorPicker from '../components/ColorPicker';
-import ProductReviewSession from '../components/ProductReviewSession';
-import QuantityInput from '../components/QuantityInput';
-import SizePicker from '../components/SizePicker';
+import CompColorPicker from '../components/CompColorPicker';
+import CompProductReviewSession from '../components/CompProductReviewSession';
+import CompQuantityInput from '../components/CompQuantityInput';
+import CompSizePicker from '../components/CompSizePicker';
 import {
+  actionAddCartItem,
   actionGetProductAttributes,
   actionGetProductCategories,
   actionGetProductDetail,
@@ -36,25 +38,33 @@ import { IRootState } from '../models/reducers';
 import { ICategoriesState } from '../models/reducers/Categories';
 import { IProductState } from '../models/reducers/Products';
 import { IAttributeProductValue, IReview } from '../models/schemas';
-
 interface IProductRouteParams {
   id: string;
 }
 
-interface IProductPageProps extends DispatchProp, RouteComponentProps<IProductRouteParams> {
+interface IProductPageProps
+  extends DispatchProp,
+    RouteComponentProps<IProductRouteParams>,
+    withSnackbarProps {
   products: IProductState;
   categories: ICategoriesState;
 }
 
 interface IProductPageState {
   productImage: string;
+  quantity: number;
+  attributes: {
+    [index: string]: IAttributeProductValue;
+  };
 }
 
 class ProductPage extends React.Component<IProductPageProps, IProductPageState> {
   constructor (props: IProductPageProps) {
     super(props);
     this.state = {
-      productImage: ''
+      productImage: '',
+      quantity: 1,
+      attributes: {}
     };
   }
 
@@ -103,6 +113,61 @@ class ProductPage extends React.Component<IProductPageProps, IProductPageState> 
     return parseFloat(productDetail.discounted_price) > 0;
   }
 
+  public addCartItem = () => {
+    const { productDetail } = this.props.products;
+    if (productDetail) {
+      const attributes = Object.keys(this.state.attributes).map(
+        (key) => this.state.attributes[key]
+      );
+      this.props.dispatch(actionAddCartItem(productDetail, attributes, this.state.quantity));
+      this.props.enqueueSnackbar(
+        <span>
+          <strong>{productDetail.name}</strong> was added to cart!
+        </span>,
+        {
+          variant: 'success',
+          preventDuplicate: true
+        }
+      );
+    }
+  }
+
+  public quantityChangeHandler = (quantity: number) => {
+    this.setState({ quantity });
+  }
+
+  public productImageChangeHandler = (productImage: string) => () => {
+    this.setState({ productImage });
+  }
+
+  public colorChangeHandler = (color: string) => {
+    setTimeout(() => {
+      const { productAtrributes } = this.props.products;
+      const attributes = { ...this.state.attributes };
+      const colorAttributeValue = productAtrributes.find(
+        (attr) => attr.attribute_name === 'Color' && attr.attribute_value === color
+      );
+      if (colorAttributeValue) {
+        const attrColor = { ...colorAttributeValue };
+        attributes[colorAttributeValue.attribute_name] = attrColor;
+        this.setState({ attributes });
+      }
+    }, 1);
+  }
+
+  public sizeChangeHandler = (size: string) => {
+    const { productAtrributes } = this.props.products;
+    const attributes = { ...this.state.attributes };
+    const sizeAttributeValue = productAtrributes.find(
+      (attr) => attr.attribute_name === 'Size' && attr.attribute_value === size
+    );
+    if (sizeAttributeValue) {
+      const attrSize = { ...sizeAttributeValue };
+      attributes[sizeAttributeValue.attribute_name] = attrSize;
+      this.setState({ attributes });
+    }
+  }
+
   public render () {
     const { productDetail } = this.props.products;
     const { productCategories } = this.props.categories;
@@ -114,7 +179,7 @@ class ProductPage extends React.Component<IProductPageProps, IProductPageState> 
     const { name, image, image_2, thumbnail, price, discounted_price } = productDetail;
 
     return (
-      <Card>
+      <Card className='border-0'>
         <Container>
           <Row>
             <Col md={6}>
@@ -156,13 +221,25 @@ class ProductPage extends React.Component<IProductPageProps, IProductPageState> 
                 </Card.Text>
 
                 <h6 className='text-muted mb-2'>Color</h6>
-                <ColorPicker colors={this.availableColors} />
+                <CompColorPicker
+                  colors={this.availableColors}
+                  onColorChange={this.colorChangeHandler}
+                />
 
                 <h6 className='text-muted mt-4 mb2'>Size</h6>
-                <SizePicker sizes={this.availableSizes} />
+                <CompSizePicker
+                  sizes={this.availableSizes}
+                  onSizeChange={this.sizeChangeHandler}
+                />
 
                 <h6 className='text-muted mt-4 mb2'>Quantity</h6>
-                <QuantityInput value={1} max={10} min={1} step={1} />
+                <CompQuantityInput
+                  value={this.state.quantity}
+                  max={10}
+                  min={1}
+                  step={1}
+                  onChange={this.quantityChangeHandler}
+                />
               </Card.Body>
             </Col>
           </Row>
@@ -184,9 +261,7 @@ class ProductPage extends React.Component<IProductPageProps, IProductPageState> 
                         backgroundSize: 'contain',
                         backgroundRepeat: 'no-repeat'
                       }}
-                      onClick={() => {
-                        this.setState({ productImage: img });
-                      }}
+                      onClick={this.productImageChangeHandler(img)}
                     />
                   ))}
                 </Row>
@@ -194,7 +269,11 @@ class ProductPage extends React.Component<IProductPageProps, IProductPageState> 
             </Col>
             <Col md={3}>
               <Card.Body>
-                <Button variant='danger' size='lg' className='rounded-pill'>
+                <Button
+                  variant='danger'
+                  size='lg'
+                  className='rounded-pill'
+                  onClick={this.addCartItem}>
                   Add to cart
                 </Button>
               </Card.Body>
@@ -216,7 +295,7 @@ class ProductPage extends React.Component<IProductPageProps, IProductPageState> 
             </Col>
           </Row>
         </Container>
-        <ProductReviewSession productId={productDetail.product_id} />
+        <CompProductReviewSession productId={productDetail.product_id} />
       </Card>
     );
   }
@@ -229,4 +308,4 @@ const mapStateToProps = (state: IRootState) => {
   };
 };
 
-export default connect(mapStateToProps)(ProductPage);
+export default connect(mapStateToProps)(withSnackbar(ProductPage));

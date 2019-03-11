@@ -3,7 +3,7 @@ import { Button, Card, Carousel, Container, Jumbotron, Row } from 'react-bootstr
 
 // This is a mad head item that focusing on proposal new hot on the site.
 // TODO: Intergrate with backend to have it act like carousel series of hot things.
-export default function JumboTronCard (props: any) {
+export default function CompJumboTronCard (props: any) {
   return (
     <Card>
       <Card.Body>

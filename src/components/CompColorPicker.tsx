@@ -12,7 +12,10 @@ export interface IColorPickerState {
   activeColor: string;
 }
 
-export default class ColorPicker extends React.Component<IColorPickerProps, IColorPickerState> {
+export default class CompColorPicker extends React.Component<
+  IColorPickerProps,
+  IColorPickerState
+> {
   constructor (props: IColorPickerProps) {
     super(props);
     this.state = {
@@ -20,9 +23,21 @@ export default class ColorPicker extends React.Component<IColorPickerProps, ICol
     };
   }
 
+  public colorChangeHandler = (color: string) => () => {
+    const { activeColor } = this.state;
+    const { onColorChange } = this.props;
+    if (color !== activeColor) {
+      this.setState({ activeColor: color });
+      onColorChange && onColorChange(color);
+    }
+  }
+
   public render () {
     const props = this.props;
     const { activeColor } = this.state;
+    if (!this.state.activeColor && props.colors.length) {
+      this.colorChangeHandler(props.colors[0])();
+    }
     return (
       <div className='mr-2 mb-2'>
         {props.colors.map((color) => (
@@ -38,12 +53,7 @@ export default class ColorPicker extends React.Component<IColorPickerProps, ICol
                 color === activeColor ? '#f62f5e' : 'rgba(0,0,0,0.2)'
               }`
             }}
-            onClick={() => {
-              if (color !== activeColor) {
-                this.setState({ activeColor: color });
-                props.onColorChange && props.onColorChange(color);
-              }
-            }}
+            onClick={this.colorChangeHandler(color)}
           />
         ))}
       </div>
