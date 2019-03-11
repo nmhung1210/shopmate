@@ -2,7 +2,7 @@ SHOPMATE
 ==========
 
 An Ecommerce website.
-Open [https://nmhung1210.github.io/shopmate/] to view the online demo for it!
+Open [http://nmh-shop.tk] to view the online demo for it!
 
 ## Available Scripts
 
