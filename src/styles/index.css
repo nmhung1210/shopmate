@@ -1,13 +1,139 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans|Playfair+Display:700");
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans|Playfair+Display:700');
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css');
 
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Montserrat", "Open Sans", "Playfair Display", sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+h1 {
+  font-family: 'Playfair Display';
+  font-weight: 700;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montserrat';
+}
+
+.brandName {
+  padding: 0px 20px !important;
+  font-family: Montserrat;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  color: #f62f5e !important;
+}
+
+.brandName:hover {
+  text-decoration: none;
+}
+
+.mainNavItem {
+  padding: 0px 20px !important;
+  line-height: 48px;
+  vertical-align: middle;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: bold;
+  color: #2e2e2e !important;
+}
+
+.jumboTron {
+  background-image: url('/images/shopping-girl.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 480px;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.jumboTron .card {
+  background: none;
+  padding: 2.5rem;
+  height: 100%;
+}
+
+.jumboTron .card-title {
+  font-family: PlayfairDisplay;
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.jumboTron .card-text {
+  font-family: Montserrat;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.btn {
+  font-family: Montserrat;
+}
+
+.footerNav {
+  padding: 3rem 1.5rem;
+  background-color: #fff;
+}
+
+.footerNav .col-md-3 {
+  margin: 1rem 0;
+}
+
+.footerNav a {
+  font-family: OpenSans;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #2e2e2e;
+}
+
+.pageContainer {
+  padding: 1rem;
+}
+
+button:focus {
+  outline: none;
+}
+
+.contentCard {
+  padding: 1rem;
+}
+
+.productCover {
+  opacity: 0;
+  cursor: pointer;
+  transition: all 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.productCover:hover {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.breadcrumb {
+  background-color: transparent;
+  padding-left: 0;
+  margin-bottom: 0.5rem;
+}
+
+.page-link {
+  box-shadow: none !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

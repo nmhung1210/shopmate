@@ -1,5 +1,8 @@
-import api from './webApi';
-
+import * as attributeApis from './attributes';
+import * as categoryApis from './categories';
+import * as productApis from './products';
 export {
-  api
+  productApis,
+  categoryApis,
+  attributeApis
 };
