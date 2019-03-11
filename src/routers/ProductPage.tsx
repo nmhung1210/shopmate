@@ -246,7 +246,12 @@ class ProductPage extends React.Component<IProductPageProps, IProductPageState> 
           <Row>
             <Col md={6}>
               <Container className='p-4'>
-                <Row className='justify-content-md-center'>
+                <Row>
+                  <Col className='d-lg-none d-xl-none col d-md-none'>
+                    <Card.Img src={`${CDN_ROOT}${this.state.productImage}`} />
+                  </Col>
+                </Row>
+                <Row className='justify-content-center'>
                   {/* TODO: Adding support for dynamic images here  */}
                   {[image, image_2, thumbnail].map((img) => (
                     <Button
