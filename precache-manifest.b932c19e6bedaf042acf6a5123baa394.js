@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/shopmate/static/js/runtime~main.4033d7aa.js"
   },
   {
-    "revision": "9964daa3e85d25e31890",
-    "url": "/shopmate/static/js/main.9964daa3.chunk.js"
+    "revision": "ba869e5c9187db8a460e",
+    "url": "/shopmate/static/js/main.ba869e5c.chunk.js"
   },
   {
     "revision": "cfe938cf46d746c18d47",
     "url": "/shopmate/static/js/2.cfe938cf.chunk.js"
   },
   {
-    "revision": "9964daa3e85d25e31890",
-    "url": "/shopmate/static/css/main.cddcebb6.chunk.css"
+    "revision": "ba869e5c9187db8a460e",
+    "url": "/shopmate/static/css/main.7f7f1955.chunk.css"
   },
   {
-    "revision": "d39a10cb053684cd73bda2ce225d1cff",
+    "revision": "21b8330392de0813fff46dbb7a2f14a1",
     "url": "/shopmate/index.html"
   }
 ];
