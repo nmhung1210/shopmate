@@ -113,7 +113,7 @@ function CompCartDialog (props: ICartDialogProps) {
                   />
                 </Col>
                 <Col as='h6' md={1}>
-                  ${item.subtotal}
+                  ${item.subtotal.toFixed(2)}
                 </Col>
               </Row>
             );
