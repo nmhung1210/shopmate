@@ -27,7 +27,7 @@ class SearchPage extends React.Component<ISearchPageProps> {
       <Container>
         <Row>
           <Col md={3}>
-            <Container className='sticky-top' style={{ top: '7rem' }}>
+            <Container>
               <Card className='bg-light mt-4 p-4 rounded-0'>
                 <Card.Title as='h6'>Filters {products.products.count} items</Card.Title>
               </Card>
