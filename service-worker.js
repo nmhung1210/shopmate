@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/shopmate/precache-manifest.b4c20f7b73bd1208a897180785882183.js"
+  "/shopmate/precache-manifest.67812b5f8939b9902353118b94f2b4c0.js"
 );
 
 workbox.clientsClaim();
