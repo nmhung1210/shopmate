@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/shopmate/static/css/main.57191bc9.chunk.css"
   },
   {
-    "revision": "52411ca50aab58324f1a09ba8575d7a5",
+    "revision": "aace5f556f7c67c993ec0e070661adf0",
     "url": "/shopmate/index.html"
   }
 ];
