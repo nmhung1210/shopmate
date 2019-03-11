@@ -2,7 +2,7 @@ import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import App from './App';
 import { DataProvider } from './models';
 import * as serviceWorker from './serviceWorker';
