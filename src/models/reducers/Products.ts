@@ -21,6 +21,7 @@ export interface IProductState {
   limit: number;
   promotion: IProduct | null;
   fetchingCount: number;
+  queryString: string;
 }
 
 export default function Products (
@@ -35,7 +36,8 @@ export default function Products (
     page: 1,
     limit: 20,
     promotion: null,
-    fetchingCount: 0
+    fetchingCount: 0,
+    queryString: ''
   } as IProductState,
   action: IAction
 ): IProductState {
@@ -57,6 +59,7 @@ export default function Products (
         newState.limit = limit;
         newState.page = page;
         newState.products = data;
+        newState.queryString = params.queryString;
         // Pick a product to promotion.
         // TODO: need to be manage by backend.
         if (newState.products.rows.length) {

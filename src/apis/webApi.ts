@@ -1,7 +1,14 @@
-import Axios, { AxiosInstance, AxiosResponse } from 'axios';
+import Axios, { AxiosError, AxiosInstance, AxiosPromise, AxiosResponse } from 'axios';
 import qs from 'qs';
 import storeCache from 'store';
 import { API_CACHE_TIMEOUT, API_ENDPOINT, API_REQUEST_TIMEOUT } from '../configs';
+
+export interface IApiError {
+  code: number;
+  field: string;
+  message: string;
+  status: number;
+}
 
 export class WebApi {
   public loginChain: Promise<any>;
@@ -39,6 +46,19 @@ export class WebApi {
     return !!this.token;
   }
 
+  public handleApiError = (error: AxiosError): Promise<IApiError> => {
+    const errorResponse =
+      error.response && error.response.data
+        ? error.response.data.error
+        : {
+            code: error.code,
+            field: '',
+            message: error.message,
+            status: error.code
+          };
+    return Promise.reject(errorResponse);
+  }
+
   public get (
     path: string,
     payload = null as any,
@@ -63,7 +83,8 @@ export class WebApi {
           });
         }
         return data;
-      });
+      })
+      .catch(this.handleApiError);
   }
 
   public inValidateCache (path = ''): void {
@@ -80,12 +101,18 @@ export class WebApi {
   public post (path: string, payload: any): Promise<any> {
     // Clear cache under this path to ensure recieve latest data from the get api.
     this.inValidateCache(path);
-    return this.axios.post(path, payload).then((res: AxiosResponse): any => res.data || res);
+    return this.axios
+      .post(path, payload)
+      .then((res: AxiosResponse): any => res.data || res)
+      .catch(this.handleApiError);
   }
 
   public put (path: string, payload: any): Promise<any> {
     this.inValidateCache(path);
-    return this.axios.put(path, payload).then((res: AxiosResponse): any => res.data || res);
+    return this.axios
+      .put(path, payload)
+      .then((res: AxiosResponse): any => res.data || res)
+      .catch(this.handleApiError);
   }
 
   // authGet method  would check if user already logged in before exec the api call.
@@ -95,15 +122,17 @@ export class WebApi {
     usecache = true,
     cacheTimeout = API_CACHE_TIMEOUT
   ): Promise<any> {
-    return this.loginChain.then(() => this.get(path, payload, usecache, cacheTimeout));
+    return this.loginChain
+      .then(() => this.get(path, payload, usecache, cacheTimeout))
+      .catch(this.handleApiError);
   }
 
   public authPost (path: string, payload: any): Promise<any> {
-    return this.loginChain.then(() => this.post(path, payload));
+    return this.loginChain.then(() => this.post(path, payload)).catch(this.handleApiError);
   }
 
   public authPut (path: string, payload: any): Promise<any> {
-    return this.loginChain.then(() => this.put(path, payload));
+    return this.loginChain.then(() => this.put(path, payload)).catch(this.handleApiError);
   }
 }
 

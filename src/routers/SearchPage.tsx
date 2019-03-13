@@ -1,25 +1,49 @@
+import qs from 'qs';
 import * as React from 'react';
 import { Card, CardDeck, Col, Container, Row } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import { connect } from 'react-redux';
 import { DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import CompColorPicker from '../components/CompColorPicker';
 import CompPaginationBar from '../components/CompPaginationBar';
 import CompProductCard from '../components/CompProductCard';
 import CompSizePicker from '../components/CompSizePicker';
-import { actionGetProducts } from '../models/actions';
+import { actionGetProducts, actionSeachProducts } from '../models/actions';
 import { IRootState } from '../models/reducers';
 import { IProductState } from '../models/reducers/Products';
 import { IProduct } from '../models/schemas';
 import { arrayChunks } from '../utils';
 
-interface ISearchPageProps extends DispatchProp {
+interface ISearchPageProps extends DispatchProp, RouteComponentProps {
   products: IProductState;
 }
 class SearchPage extends React.Component<ISearchPageProps> {
   public componentWillMount () {
+    const { search = '' } = this.props.location;
+    if (search) {
+      const query = qs.parse(search.substr(1));
+      if (query.query_string) {
+        return this.props.dispatch(actionSeachProducts(query.query_string));
+      }
+    }
     this.props.dispatch(actionGetProducts());
   }
+
+  public componentWillReceiveProps (props: ISearchPageProps) {
+    if (this.props.location === props.location) {
+      return;
+    }
+    const { search = '' } = props.location;
+    if (search) {
+      const query = qs.parse(search.substr(1));
+      if (query.query_string) {
+        return props.dispatch(actionSeachProducts(query.query_string));
+      }
+    }
+    this.props.dispatch(actionGetProducts());
+  }
+
   public render () {
     const products = this.props.products;
     const rows = arrayChunks(products.products.rows, 3);
@@ -58,19 +82,28 @@ class SearchPage extends React.Component<ISearchPageProps> {
                       ))}
                     </CardDeck>
                   ))}
+                  {!rows.length ? (
+                    <h3 className='text-muted p-4 text-center'>
+                      No product founds for <strong>{products.queryString}</strong>!
+                    </h3>
+                  ) : null}
                 </Col>
               </Row>
               <Row>
                 <Col md={12}>
-                  <Container className='d-flex justify-content-end p-4'>
-                    <CompPaginationBar
-                      limit={products.limit}
-                      count={products.products.count}
-                      page={products.page}
-                      showCount={5}
-                      onPage={(page) => this.props.dispatch(actionGetProducts(page))}
-                    />
-                  </Container>
+                  {rows.length ? (
+                    <Container className='d-flex justify-content-end p-4'>
+                      <CompPaginationBar
+                        limit={products.limit}
+                        count={products.products.count}
+                        page={products.page}
+                        showCount={5}
+                        onPage={(page) => this.props.dispatch(actionGetProducts(page))}
+                      />
+                    </Container>
+                  ) : (
+                    ''
+                  )}
                 </Col>
               </Row>
             </Container>

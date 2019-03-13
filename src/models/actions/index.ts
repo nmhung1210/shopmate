@@ -2,7 +2,7 @@ import { Dispatch } from 'react';
 import { DispatchProp } from 'react-redux';
 import { attributeApis, categoryApis, productApis } from '../../apis';
 import { apiCustomerLogin, apiRegisterCustomer } from '../../apis/customer';
-import api from '../../apis/webApi';
+import api, { IApiError } from '../../apis/webApi';
 import { IDialogProps } from '../reducers/Dialogs';
 import {
   IAction,
@@ -35,6 +35,45 @@ export const actionGetProducts = (page = 1, limit = 6): any => (
           data: result,
           page,
           limit
+        }
+      })
+    )
+    .catch((error) => {
+      dispatch({
+        type: ActionTypes.GET_PRODUCTS,
+        params: {
+          isFetching: false,
+          success: false,
+          error
+        }
+      });
+    });
+};
+
+export const actionSeachProducts = (
+  query: string,
+  allWords = 'off',
+  page = 1,
+  limit = 6
+): any => (dispatch: (action: IAction) => void) => {
+  dispatch({
+    type: ActionTypes.GET_PRODUCTS,
+    params: {
+      isFetching: true
+    }
+  });
+  return productApis
+    .apiSearchProducts(query, allWords, page, limit)
+    .then((result) =>
+      dispatch({
+        type: ActionTypes.GET_PRODUCTS,
+        params: {
+          isFetching: false,
+          success: true,
+          data: result,
+          page,
+          limit,
+          queryString: query
         }
       })
     )
@@ -203,10 +242,10 @@ export const actionCustomerLogin = (email: string, password: string): any => (
       });
       return result;
     })
-    .catch((error) => {
+    .catch((error: IApiError) => {
       dispatch(
         actionShowDialog('login', {
-          error: 'Login failed! Please try again!'
+          error: error.message
         })
       );
     });
@@ -230,10 +269,10 @@ export const actionCustomerRegister = (email: string, password: string): any => 
       });
       return result;
     })
-    .catch((error) => {
+    .catch((error: IApiError) => {
       dispatch(
         actionShowDialog('register', {
-          error: 'Register failed! Please try again!'
+          error: error.message
         })
       );
     });
